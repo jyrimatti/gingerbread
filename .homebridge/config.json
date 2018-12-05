@@ -1,0 +1,25 @@
+{
+    "bridge": {
+        "name": "GingerBread",
+        "username": "B8:27:EB:DB:65:9A",
+        "port": 51826,
+        "pin": "123-45-679"
+    },
+    
+    "description": "Hello",
+
+    "accessories": [
+        {
+              "accessory": "Script2",
+              "name": "GingerBread house lights",
+              "on": "~/gingerbread/on.sh",
+              "off": "~/gingerbread/off.sh",
+              "state": "~/gingerbread/state.sh",
+              "on_value" : "1",
+              "exact_match": false
+        }
+    ],
+
+    "platforms": [
+    ]
+}
