@@ -1,5 +1,5 @@
 #!/usr/bin/env runhaskell
-
+{-# LANGUAGE ScopedTypeVariables #-}
 module Main where
 
 import System.GPIO.Linux.Sysfs 
@@ -7,6 +7,7 @@ import System.GPIO.Monad
 import Control.Concurrent (threadDelay)
 import Numeric.Natural
 import Data.Monoid ((<>))
+import Control.Exception (catch,SomeException)
 import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
 
@@ -64,9 +65,10 @@ scroll     pins = fmap (\p -> ([p],250)) pins <> [([],50)]
 scrollFast pins = fmap (\p -> ([p],100)) pins <> [([],50)]
 scrollSlow pins = fmap (\p -> ([p],1000)) pins <> [([],50)]
 
-main = runSysfsGpioIO $ do
-  traverse (\pin -> openPin pin >>= \h -> setPinOutputMode h OutputDefault Low) allLights
-  forever $ traverse runStep steps
+main = (runSysfsGpioIO $ do
+    traverse (\pin -> openPin pin >>= \h -> setPinOutputMode h OutputDefault Low) allLights
+    forever $ traverse runStep steps
+  ) `catch` (\(_ :: SomeException) -> runSysfsGpioIO $ traverse unset allLights)
 
 runStep (pins,ms) = do
     traverse unset allLights

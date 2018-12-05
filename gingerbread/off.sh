@@ -1,3 +1,3 @@
 #!/bin/sh
 
-killall on.sh
+sudo killall ghc

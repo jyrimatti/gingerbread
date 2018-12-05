@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./Main.hs
+sudo $(dirname $0)/Main.hs

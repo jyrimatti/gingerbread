@@ -14,7 +14,7 @@
               "name": "GingerBread house lights",
               "on": "~/gingerbread/on.sh",
               "off": "~/gingerbread/off.sh",
-              "state": "~/gingerbread/state.sh",
+              "state": "~/gingerbread/status.sh",
               "on_value" : "1",
               "exact_match": false
         }
