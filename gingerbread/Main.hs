@@ -49,14 +49,12 @@ allLights = reds <> greens <> blues
 type DelayMs = Natural
 type Step = ([Pin],DelayMs)
 
-jyppe = [(reds, 1000)
+steps = [(reds, 1000)
         ,(greens, 1000)
         ,(blues, 1000)
         ,(reds, 500)
         ,(greens, 500)
         ,(blues, 500)] <> blinkSlow tree <> scroll eaves <> scroll (reverse eaves) <> blinkSlow tree
-
---laura = (concat $ take 2 $ repeat $ scrollForward reds <> scrollForward blues <> scrollForward greens) <> blinkLong reds <> blinkLong blues <> blinkLong greens
 
 blink      pins = [(pins, 250), ([], 50)]
 blinkFast  pins = [(pins, 100), ([], 50)]
@@ -68,7 +66,7 @@ scrollSlow pins = fmap (\p -> ([p],1000)) pins <> [([],50)]
 
 main = runSysfsGpioIO $ do
   traverse (\pin -> openPin pin >>= \h -> setPinOutputMode h OutputDefault Low) allLights
-  forever $ traverse runStep jyppe
+  forever $ traverse runStep steps
 
 runStep (pins,ms) = do
     traverse unset allLights
